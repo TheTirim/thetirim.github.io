@@ -43,7 +43,11 @@ body {
 
 .hero { padding: 90px 0 80px; }
 #projects { padding: 84px 0; }
-#contact { padding: 90px 0; }
+#about,
+#contact {
+  min-height: auto;
+  padding: 2.5rem 0;
+}
 
 .muted { opacity: 1; color: var(--muted); }
 .lead { font-size: 1.1rem; color: rgba(233,236,245,.85); }
