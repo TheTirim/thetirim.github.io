@@ -19,7 +19,7 @@
   --footer-bg: rgba(6,8,16,.9);
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -130,6 +130,12 @@ p { max-width: 65ch; }
 .grid { display: grid; gap: 16px; }
 .grid.cards { grid-template-columns: repeat(3, 1fr); }
 .grid.two { grid-template-columns: repeat(2, 1fr); }
+.grid.two > .panel { min-width: 0; }
+
+.panel ul li {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
 
 /* TAGS */
 .tags {
