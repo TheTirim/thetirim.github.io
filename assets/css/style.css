@@ -20,7 +20,10 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  min-height: 100%;
+}
 
 body {
   position: relative;
@@ -29,11 +32,7 @@ body {
   line-height: 1.5;
   color: var(--text);
 
-  /* nicer background, less "white" */
-  background:
-    radial-gradient(1200px 700px at 20% 10%, rgba(120,130,255,.25), transparent 60%),
-    radial-gradient(900px 600px at 80% 30%, rgba(90,255,210,.18), transparent 55%),
-    linear-gradient(180deg, var(--bg1), var(--bg2));
+  background: transparent;
 }
 
 #binary-bg {
@@ -41,9 +40,9 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.20;
 }
 
 main,
@@ -276,13 +275,26 @@ html, body {
   inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
+  opacity: 0.20;
 }
 
 body {
   position: relative;
   overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 600px at 70% 20%, rgba(50,160,160,0.35), transparent 60%),
+    linear-gradient(180deg, rgba(7,10,22,1) 0%, rgba(9,14,33,1) 45%, rgba(6,10,22,1) 100%);
+  transform: translateZ(0);
 }
 
 main, header, nav, footer, #app, .app, .content {

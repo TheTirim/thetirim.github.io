@@ -48,12 +48,13 @@
   }
 
   function renderFrame(clearOnly = false) {
-    const driftX = (pointerX - 0.5) * 6;
+    const driftX = Math.round((pointerX - 0.5) * 6);
     const driftY = (pointerY - 0.5) * 4;
     const intensity = 0.82 + pointerY * 0.28;
 
     ctx.fillStyle = 'rgba(11, 16, 32, 0.1)';
-    ctx.fillRect(0, 0, width, height);
+    ctx.globalAlpha = 1;
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
     if (clearOnly) return;
 
@@ -75,6 +76,8 @@
 
       drops[i] += 1;
     }
+
+    ctx.globalAlpha = 1;
   }
 
   function animationLoop(timestamp) {
