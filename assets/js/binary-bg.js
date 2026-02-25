@@ -9,7 +9,6 @@
 
   let width = 0;
   let height = 0;
-  let dpr = 1;
   let fontSize = 16;
   let drops = [];
   let rafId = null;
@@ -20,17 +19,16 @@
 
   const baseColor = '120, 255, 210';
 
-  function setupCanvas() {
-    dpr = Math.max(1, window.devicePixelRatio || 1);
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    canvas.width = Math.floor(window.innerWidth * dpr);
+    canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
     width = window.innerWidth;
     height = window.innerHeight;
-
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.textBaseline = 'top';
 
     fontSize = Math.max(14, Math.min(18, Math.round(width / 90)));
@@ -40,6 +38,13 @@
     drops = Array.from({ length: columns }, () => Math.floor(Math.random() * (height / fontSize)));
 
     renderFrame(true);
+  }
+
+  function debounce(fn, delay) {
+    return (...args) => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => fn(...args), delay);
+    };
   }
 
   function renderFrame(clearOnly = false) {
@@ -105,10 +110,7 @@
     pointerY = event.clientY / Math.max(window.innerHeight, 1);
   }, { passive: true });
 
-  window.addEventListener('resize', () => {
-    window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(setupCanvas, 140);
-  });
+  window.addEventListener('resize', debounce(resize, 150));
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
@@ -130,12 +132,12 @@
       stopLoop();
       renderFrame(true);
     } else {
-      setupCanvas();
+      resize();
       startLoop();
     }
   });
 
-  setupCanvas();
+  resize();
   if (!prefersReducedMotion.matches) {
     startLoop();
   }

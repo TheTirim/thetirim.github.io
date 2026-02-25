@@ -259,9 +259,33 @@ a:focus-visible, .btn:focus-visible, .nav a:focus-visible {
   .grid.two { grid-template-columns: 1fr; }
   p { max-width: 100%; }
 }
-
 /* Reduced motion friendly */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .card:hover, .panel:hover, .hero-card:hover { transform: none; }
+}
+
+
+html, body {
+  height: 100%;
+  min-height: 100%;
+}
+
+#binary-bg {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0;
+  pointer-events: none;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+main, header, nav, footer, #app, .app, .content {
+  position: relative;
+  z-index: 1;
 }
