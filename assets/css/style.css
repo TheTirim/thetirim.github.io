@@ -585,29 +585,6 @@ main, header, nav, footer, #app, .app, .content {
   animation: statusPulseSoft 8.6s ease-in-out infinite;
 }
 
-#projects {
-  position: relative;
-}
-
-#projects::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(233,236,245,0), rgba(233,236,245,.38), rgba(233,236,245,0));
-  transform-origin: left center;
-  transform: scaleX(0);
-  opacity: 0;
-  transition: transform .8s ease, opacity .6s ease;
-}
-
-#projects.divider-visible::before {
-  transform: scaleX(1);
-  opacity: .85;
-}
-
 .cards:hover .card {
   opacity: .95;
 }
@@ -655,7 +632,6 @@ main, header, nav, footer, #app, .app, .content {
 @media (prefers-reduced-motion: reduce) {
   .hero-headline .hero-word,
   .status-dot,
-  #projects::before,
   .confidence-reveal {
     animation: none !important;
     transition: opacity .2s ease !important;
@@ -664,11 +640,6 @@ main, header, nav, footer, #app, .app, .content {
   .cards:hover .card,
   .cards:hover .card:hover {
     opacity: 1;
-  }
-
-  #projects::before {
-    transform: none;
-    opacity: .65;
   }
 
   .confidence-reveal,
