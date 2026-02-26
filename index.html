@@ -27,13 +27,14 @@
 
   <main id="main">
     <!-- HERO -->
-    <section class="section hero">
+    <section class="section hero" id="hero">
+      <div class="hero-depth-layer" aria-hidden="true"></div>
       <div class="container hero-inner">
         <div>
-          <p class="kicker">Anwendungsentwickler in Ausbildung </p>
-          <h1>Ich entwickle praxisnahe Software mit klarer Struktur und nachvollziehbarer Dokumentation.</h1>
-          <p class="lead">
-            Fokus auf verständliche Lösungen und reproduzierbare Ergebnisse.
+          <p class="kicker hero-reveal-group"><span class="hero-word">Anwendungsentwickler</span> <span class="hero-word">in</span> <span class="hero-word">Ausbildung</span></p>
+          <h1 class="hero-reveal-group"><span class="hero-word">Ich</span> <span class="hero-word">entwickle</span> <span class="hero-word">praxisnahe</span> <span class="hero-word">Software</span> <span class="hero-word">mit</span> <span class="hero-word">klarer</span> <span class="hero-word">Struktur</span> <span class="hero-word">und</span> <span class="hero-word">nachvollziehbarer</span> <span class="hero-word">Dokumentation.</span><span class="hero-cursor" aria-hidden="true"></span></h1>
+          <p class="lead hero-reveal-group">
+            <span class="hero-word">Fokus</span> <span class="hero-word">auf</span> <span class="hero-word">verständliche</span> <span class="hero-word">Lösungen</span> <span class="hero-word">und</span> <span class="hero-word">reproduzierbare</span> <span class="hero-word">Ergebnisse.</span>
           </p>
 
           <div class="actions">
@@ -46,7 +47,7 @@
           <ul class="facts">
            <li><strong>Stack:</strong> Java, Python, PHP, SQL · HTML, CSS, JavaScript</li>
           <li><strong>Fokus:</strong> Backend, Frontend & Webentwicklung</li>
-          <li><strong>Status:</strong> Portfolio im Aufbau</li>
+          <li><strong>Status:</strong> Portfolio im Aufbau <span class="status-dot" aria-hidden="true"></span></li>
 
           </ul>
         </div>
@@ -62,7 +63,7 @@
         </header>
 
         <div class="grid cards">
-          <article class="card">
+          <article class="card reveal">
             <h3>TabZero – Minimalistischer Tab-Blocker</h3>
             <p class="muted">
               TabZero ist ein minimalistisches Firefox-Addon, das neue Tabs standardmäßig blockiert und nur explizit erlaubte Seiten zulässt.
@@ -75,7 +76,7 @@
               <a href="https://addons.mozilla.org/de/firefox/addon/tabzero/" target="_blank" rel="noreferrer">Addon</a>
             </div>
           </article>
-          <article class="card">
+          <article class="card reveal">
             <h3>IceChaos – 2D Arcade Game</h3>
             <p class="muted">
               IceChaos ist ein kleines 2D-Arcade-Spiel, das als Lern- und Übungsprojekt entstanden ist.

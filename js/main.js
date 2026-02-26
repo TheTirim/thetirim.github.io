@@ -2,55 +2,49 @@
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Projects Carousel
-const viewport = document.getElementById("projectsViewport");
+const heroWords = document.querySelectorAll(".hero-reveal-group .hero-word");
+heroWords.forEach((word, index) => {
+  word.style.setProperty("--word-index", index);
+});
 
-if (viewport) {
-  const track = viewport.querySelector(".car-track");
-  const items = track ? track.querySelectorAll(".car-item") : [];
-  const btns = document.querySelectorAll(".car-btn");
+const heroCursor = document.querySelector(".hero-cursor");
+if (heroCursor) {
+  window.setTimeout(() => {
+    heroCursor.style.display = "none";
+  }, 8000);
+}
 
-  if (!track || items.length === 0) {
-    // Wenn HTML-Struktur nicht passt, abbrechen ohne Fehler
-    console.warn("Carousel: track oder items fehlen.");
-  } else {
-    let index = 0;
+const hero = document.getElementById("hero");
+if (hero) {
+  const updateHeroDepth = (xRatio, yRatio) => {
+    hero.style.setProperty("--hero-shift-x", `${xRatio * 4}px`);
+    hero.style.setProperty("--hero-shift-y", `${yRatio * 3}px`);
+  };
 
-    function getStep() {
-      const itemWidth = items[0].getBoundingClientRect().width;
-      const gap = 16; // muss zu CSS gap passen
-      return itemWidth + gap;
-    }
+  window.addEventListener("mousemove", (event) => {
+    const xRatio = (event.clientX / window.innerWidth - 0.5) * 2;
+    const yRatio = (event.clientY / window.innerHeight - 0.5) * 2;
+    updateHeroDepth(xRatio, yRatio);
+  });
 
-    function clampIndex() {
-      const step = getStep();
-      const visible = Math.max(1, Math.floor(viewport.clientWidth / step));
-      const maxIndex = Math.max(0, items.length - visible);
-      index = Math.min(Math.max(index, 0), maxIndex);
-    }
+  window.addEventListener("scroll", () => {
+    const y = Math.min(window.scrollY, 200);
+    hero.style.setProperty("--hero-shift-y", `${Math.max(-2, -y * 0.02)}px`);
+  }, { passive: true });
+}
 
-    function update() {
-      const step = getStep();
-      track.style.transform = `translateX(${-index * step}px)`;
-    }
-
-    btns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        index += Number(btn.dataset.dir);
-        clampIndex();
-        update();
-      });
+const revealElements = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window && revealElements.length > 0) {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.2 });
 
-    // Tastatur (links/rechts) – viewport muss fokussierbar sein (tabindex="0" im HTML)
-    viewport.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") { index--; clampIndex(); update(); }
-      if (e.key === "ArrowRight") { index++; clampIndex(); update(); }
-    });
-
-    window.addEventListener("resize", () => { clampIndex(); update(); });
-
-    clampIndex();
-    update();
-  }
+  revealElements.forEach((el) => observer.observe(el));
+} else {
+  revealElements.forEach((el) => el.classList.add("is-visible"));
 }
