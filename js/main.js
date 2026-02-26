@@ -4,7 +4,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (!reducedMotion) {
-  const headlineWords = document.querySelectorAll(".hero-headline .hero-word");
+  const headlineWords = document.querySelectorAll(".hero-headline .hero-word.keyword-focus");
   headlineWords.forEach((word, index) => {
     window.setTimeout(() => {
       word.classList.add("is-keyword-focus");
