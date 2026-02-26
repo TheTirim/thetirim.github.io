@@ -1,3 +1,14 @@
+const HERO_SEL = "#hero";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(HERO_SEL);
+  if (!hero) return;
+
+  window.requestAnimationFrame(() => {
+    hero.classList.add("is-loaded");
+  });
+});
+
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -13,7 +24,7 @@ if (!reducedMotion) {
   });
 }
 
-const revealElements = document.querySelectorAll(".reveal");
+const revealElements = document.querySelectorAll("main .section:not(#hero) .reveal");
 if ("IntersectionObserver" in window && revealElements.length > 0) {
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
