@@ -122,11 +122,25 @@ p { max-width: 65ch; }
   align-items: start;
 }
 
-.hero--reveal {
+
+
+#hero .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  animation: heroLoadReveal 1100ms cubic-bezier(.22, .61, .36, 1) 120ms forwards;
-  will-change: transform, opacity;
+  transform: translateY(14px);
+  transition-property: opacity, transform;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(.22, .61, .36, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+#hero.is-loaded .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#hero .hero-headline.reveal {
+  transition-duration: 1080ms;
 }
 
 /* GLASS CARDS (base) */
@@ -370,7 +384,7 @@ a:focus-visible, .btn:focus-visible, .nav a:focus-visible {
     opacity: 1;
     transform: none;
   }
-  .hero-word, .hero-cursor, .hero-card, .status-dot, .btn::after, .reveal {
+  .hero-word, .hero-cursor, .hero-card, .status-dot, .btn::after, .reveal, #hero .reveal {
     animation: none !important;
     transition: none !important;
     opacity: 1;
@@ -571,13 +585,6 @@ main, header, nav, footer, #app, .app, .content {
 @keyframes btnSweep {
   from { transform: translateX(-140%); }
   to { transform: translateX(160%); }
-}
-
-@keyframes heroLoadReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .hero-word {
