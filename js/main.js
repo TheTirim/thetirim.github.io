@@ -44,23 +44,3 @@ if ("IntersectionObserver" in window && confidenceElements.length > 0) {
 } else {
   confidenceElements.forEach((el) => el.classList.add("is-confident"));
 }
-
-const projectsSection = document.getElementById("projects");
-if (
-  projectsSection &&
-  "IntersectionObserver" in window &&
-  !reducedMotion
-) {
-  const dividerObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("divider-visible");
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  dividerObserver.observe(projectsSection);
-} else if (projectsSection) {
-  projectsSection.classList.add("divider-visible");
-}
