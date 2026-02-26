@@ -345,6 +345,16 @@ a:focus-visible, .btn:focus-visible, .nav a:focus-visible {
   p { max-width: 100%; }
 }
 /* Reduced motion friendly */
+
+#contact .btn::after {
+  display: none;
+}
+
+#contact .btn:hover::after,
+#contact .btn:focus-visible::after {
+  animation: none;
+  opacity: 0;
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .card:hover, .panel:hover, .hero-card:hover { transform: none; }
@@ -562,6 +572,7 @@ main, header, nav, footer, #app, .app, .content {
 }
 
 .hero-headline .hero-word {
+  opacity: .92;
   transition: opacity .35s ease, color .35s ease;
 }
 
