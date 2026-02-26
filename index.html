@@ -3,193 +3,199 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio von Tirim – Projekte, Skills, Kontakt." />
-  <title>Tirim | Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <meta name="description" content="Pavel der Musiker – Offizielle One-Page mit Musik, Terminen und Kontakt." />
+  <title>Pavel der Musiker</title>
+  <style>
+    :root {
+      --bg: #070816;
+      --card: rgba(14, 17, 38, 0.72);
+      --text: #f4f7ff;
+      --muted: #a7b0d8;
+      --accent: #7a5cff;
+      --accent-2: #25d0ff;
+      --glow: 0 0 32px rgba(122, 92, 255, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(37, 208, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 85% 10%, rgba(122, 92, 255, 0.25), transparent 40%),
+        linear-gradient(150deg, #04050e, #080b1d 45%, #050611);
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+
+    .poster {
+      width: min(980px, 100%);
+      border-radius: 24px;
+      background: linear-gradient(140deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--glow), 0 24px 80px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: clamp(2rem, 4vw, 3.5rem);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.8vw, 4rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 24px rgba(37, 208, 255, 0.28);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(122, 92, 255, 0.2);
+      border: 1px solid rgba(122, 92, 255, 0.4);
+      color: #d9d0ff;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 1.1rem 0 0;
+      max-width: 58ch;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 18px;
+      padding: 1.2rem;
+    }
+
+    .card h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      padding: 0 2rem 2rem;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 1.6rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.15rem;
+      border-radius: 12px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 28px rgba(122, 92, 255, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(37, 208, 255, 0.38);
+    }
+
+    footer {
+      padding: 0 2rem 2rem;
+      color: #c5cdf2;
+      font-size: 0.92rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
-  <canvas id="binary-bg" aria-hidden="true"></canvas>
-  <a class="skip-link" href="#main">Zum Inhalt springen</a>
-
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a class="brand" href="#top">Tirim</a>
-
-      <nav class="nav" aria-label="Hauptnavigation">
-        <a href="#projects">Projekte</a>
-        <a href="#skills">Skills</a>
-        <a href="#about">Über mich</a>
-        <a href="#contact">Kontakt</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- HERO -->
-    <section class="section hero">
-      <div class="container hero-inner">
-        <div>
-          <p class="kicker">Anwendungsentwickler in Ausbildung </p>
-          <h1>Ich entwickle praxisnahe Software mit klarer Struktur und nachvollziehbarer Dokumentation.</h1>
-          <p class="lead">
-            Fokus auf verständliche Lösungen und reproduzierbare Ergebnisse.
-          </p>
-
-          <div class="actions">
-            <a class="btn primary" href="#projects">Projekte ansehen</a>
-            <a class="btn" href="#contact">Kontakt</a>
-          </div>
-        </div>
-
-        <div class="hero-card" aria-label="Quick Facts">
-          <ul class="facts">
-           <li><strong>Stack:</strong> Java, Python, PHP, SQL · HTML, CSS, JavaScript</li>
-          <li><strong>Fokus:</strong> Backend, Frontend & Webentwicklung</li>
-          <li><strong>Status:</strong> Portfolio im Aufbau</li>
-
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-      <div class="container">
-        <header class="section-head">
-          <h2>Projekte</h2>
-          
-        </header>
-
-        <div class="grid cards">
-          <article class="card">
-            <h3>TabZero – Minimalistischer Tab-Blocker</h3>
-            <p class="muted">
-              TabZero ist ein minimalistisches Firefox-Addon, das neue Tabs standardmäßig blockiert und nur explizit erlaubte Seiten zulässt.
-              Ziel ist mehr Fokus, weniger Ablenkung und maximale Kontrolle.
-            </p>
-            <ul class="tags">
-              <li>JavaScript</li><li>WebExtension</li><li>Privacy</li>
-            </ul>
-            <div class="card-actions">
-              <a href="https://addons.mozilla.org/de/firefox/addon/tabzero/" target="_blank" rel="noreferrer">Addon</a>
-            </div>
-          </article>
-          <article class="card">
-            <h3>IceChaos – 2D Arcade Game</h3>
-            <p class="muted">
-              IceChaos ist ein kleines 2D-Arcade-Spiel, das als Lern- und Übungsprojekt entstanden ist.
-              Der Fokus liegt auf Spiel-Logik, Kollisionsabfragen, Zustandsverwaltung und sauberer
-              Projektstruktur.
-            </p>
-            <ul class="tags">
-              <li>JavaScript</li><li>HTML</li><li>Canvas</li><li>Game Logic</li>
-            </ul>
-            <div class="card-actions">
-              <a href="https://github.com/TheTirim/Game-IceChaos" target="_blank" rel="noreferrer">Repo</a>
-              <a href="https://thetirim.github.io/Game-IceChaos/" target="_blank" rel="noreferrer">Spiel starten</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section" id="skills">
-      <div class="container">
-        <header class="section-head">
-          <h2>Skills</h2>
-        </header>
-
-<div class="grid two">
-
-  <div class="panel">
-    <h3>Technisch</h3>
-
-    <section class="skill-group">
-      <h4>Backend</h4>
-      <ul>
-        <li>Java: OOP, Collections, Grundlagen</li>
-        <li>Python: Skripte, Automatisierung, Tools</li>
-        <li>PHP: Grundlagen, serverseitige Logik</li>
-        <li>SQL: Joins, Normalisierung, ER-Modelle</li>
-        <li>REST: einfache APIs, Request/Response</li>
-      </ul>
-    </section>
-
-    <section class="skill-group">
-      <h4>Frontend</h4>
-      <ul>
-        <li>HTML: semantische Struktur</li>
-        <li>CSS: Layout, Responsive Basics</li>
-        <li>JavaScript: DOM-Manipulation, einfache Logik</li>
-      </ul>
-    </section>
-
-    <section class="skill-group">
-      <h4>Tools &amp; Workflow</h4>
-      <ul>
-        <li>Git / GitHub: Branches, PRs, Issues</li>
-        <li>CLI: grundlegende Shell-Nutzung</li>
-      </ul>
-    </section>
-  </div>
-
-  <div class="panel">
-    <h3>Arbeitsweise</h3>
-
-    <section class="skill-group">
-      <ul>
-        <li>Problemorientiertes Vorgehen: Anforderungen klären, dann umsetzen</li>
-        <li>Klare Projekt- und Ordnerstruktur von Beginn an</li>
-        <li>Kleine, nachvollziehbare Schritte statt unübersichtlicher Komplettlösungen</li>
-        <li>Dokumentation direkt während der Entwicklung (README, Kommentare)</li>
-        <li>Fokus auf wartbaren Code und reproduzierbare Ergebnisse</li>
-      </ul>
-    </section>
-  </div>
-
-</div>
-
-
-
-    <!-- ABOUT -->
-    <section class="section" id="about">
-      <div class="container">
-        <header class="section-head">
-          <h2>Über mich</h2>
-        </header>
+  <main class="poster">
+    <section class="hero">
+      <div>
+        <span class="tag">Live • Studio • Leidenschaft</span>
+        <h1>Pavel <span class="gradient">der Musiker</span></h1>
         <p>
-          Ich bin angehender Fachinformatiker für Anwendungsentwicklung mit Fokus auf Backend-Logik, Datenstrukturen und praxisnahe Tools.
-          Meine Projekte entstehen problemgetrieben: erst das Problem, dann eine saubere, nachvollziehbare Lösung.
-          Besonderen Wert lege ich auf klare Struktur, verständliche Dokumentation und reproduzierbare Ergebnisse.
+          Pavel verbindet gefühlvolle Melodien mit modernem Sound und einer Bühne voller Energie.
+          Ob intime Akustik-Sets oder große Live-Shows: Seine Musik erzählt Geschichten, die im Kopf bleiben und im Herzen weiterklingen.
         </p>
+        <a class="cta" href="mailto:booking@pavel-musik.de">Jetzt für ein Event anfragen</a>
       </div>
+
+      <aside class="card" aria-label="Kurzinfos zu Pavel">
+        <h2>Auf einen Blick</h2>
+        <ul>
+          <li>Genre: Pop, Indie, Singer-Songwriter</li>
+          <li>Live-Erfahrung: Clubs, Festivals, private Events</li>
+          <li>Special: Akustik-Sessions mit Gänsehaut-Momenten</li>
+          <li>Ort: Deutschlandweit buchbar</li>
+        </ul>
+      </aside>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="container">
-        <header class="section-head">
-          <h2>Kontakt</h2>
-        
-        </header>
-
-        <div class="contact-box">
-          <a class="btn primary" href="https://github.com/TheTirim" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-      </div>
+    <section class="grid" aria-label="Highlights">
+      <article class="card">
+        <h2>Neuste Single</h2>
+        <ul>
+          <li>"Lichter der Nacht" – jetzt auf allen Streaming-Plattformen</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Nächste Termine</h2>
+        <ul>
+          <li>12.04. – Berlin, Sound Loft</li>
+          <li>27.04. – Köln, Echo Bühne</li>
+          <li>11.05. – Hamburg, Hafenklang Session</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Kontakt</h2>
+        <ul>
+          <li>Booking: booking@pavel-musik.de</li>
+          <li>Instagram: @pavel.der.musiker</li>
+        </ul>
+      </article>
     </section>
+
+    <footer>
+      © 2026 Pavel der Musiker · One-Page Künstlerprofil
+    </footer>
   </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="muted">© <span id="year">2026</span> · Tirim · GitHub Pages</p>
-      <a href="#top">Nach oben</a>
-    </div>
-  </footer>
-
-  <script defer src="assets/js/binary-bg.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>
