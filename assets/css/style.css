@@ -550,3 +550,119 @@ main, header, nav, footer, #app, .app, .content {
   from { transform: translateX(-140%); }
   to { transform: translateX(160%); }
 }
+
+.hero-word {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.hero-cursor {
+  display: none;
+}
+
+.hero-headline .hero-word {
+  transition: opacity .35s ease, color .35s ease;
+}
+
+.hero-headline .hero-word.is-keyword-focus {
+  color: #fff;
+  opacity: 1;
+}
+
+.status-dot {
+  animation: statusPulseSoft 8.6s ease-in-out infinite;
+}
+
+#projects {
+  position: relative;
+}
+
+#projects::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(233,236,245,0), rgba(233,236,245,.38), rgba(233,236,245,0));
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform .8s ease, opacity .6s ease;
+}
+
+#projects.divider-visible::before {
+  transform: scaleX(1);
+  opacity: .85;
+}
+
+.cards:hover .card {
+  opacity: .95;
+}
+
+.cards:hover .card:hover {
+  opacity: 1;
+}
+
+.cards:hover .card:hover .muted,
+.cards:hover .card:hover h3 {
+  color: rgba(233,236,245,.98);
+}
+
+.cards:hover .card:hover .tags li {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.09);
+}
+
+.card:hover .tags li:hover {
+  transform: none;
+}
+
+.confidence-reveal {
+  opacity: .95;
+  filter: saturate(.96) contrast(.98);
+  transition: opacity .45s ease, filter .45s ease;
+}
+
+.confidence-reveal.is-confident {
+  opacity: 1;
+  filter: saturate(1) contrast(1);
+}
+
+@keyframes statusPulseSoft {
+  0%, 100% {
+    opacity: .75;
+    box-shadow: 0 0 0 0 rgba(111, 184, 255, .2);
+  }
+  45% {
+    opacity: 1;
+    box-shadow: 0 0 0 8px rgba(111, 184, 255, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline .hero-word,
+  .status-dot,
+  #projects::before,
+  .confidence-reveal {
+    animation: none !important;
+    transition: opacity .2s ease !important;
+  }
+
+  .cards:hover .card,
+  .cards:hover .card:hover {
+    opacity: 1;
+  }
+
+  #projects::before {
+    transform: none;
+    opacity: .65;
+  }
+
+  .confidence-reveal,
+  .confidence-reveal.is-confident {
+    opacity: 1;
+    filter: none;
+  }
+}
