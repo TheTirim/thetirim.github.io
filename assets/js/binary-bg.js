@@ -52,7 +52,7 @@
     const driftY = (pointerY - 0.5) * 4;
     const intensity = 0.82 + pointerY * 0.28;
 
-    ctx.fillStyle = 'rgba(11, 16, 32, 0.1)';
+    ctx.fillStyle = 'rgba(11, 16, 32, 0.07)';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -64,10 +64,13 @@
       const y = drops[i] * fontSize + driftY;
 
       const distance = Math.abs((x / Math.max(width, 1)) - pointerX);
-      const glow = Math.max(0, 1 - distance * 2.2) * 0.24;
-      const alpha = Math.min(0.45, 0.2 * intensity + glow);
+      const glow = Math.max(0, 1 - distance * 2.2) * 0.32;
+      const motionBoost = 0.75 + Math.abs(pointerX - 0.5) * 0.6;
+      const alpha = Math.min(0.62, (0.26 * intensity + glow) * motionBoost);
 
       ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
+      ctx.shadowColor = `rgba(${baseColor}, ${alpha})`;
+      ctx.shadowBlur = 6;
       ctx.fillText(digit, x, y);
 
       if (drops[i] * fontSize > height && Math.random() > 0.975) {
@@ -76,6 +79,8 @@
 
       drops[i] += 1;
     }
+
+    ctx.shadowBlur = 0;
 
     ctx.globalAlpha = 1;
   }
