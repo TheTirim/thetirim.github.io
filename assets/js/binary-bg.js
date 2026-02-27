@@ -12,6 +12,7 @@
   let fontSize = 16;
   let drops = [];
   let speeds = [];
+  let speedScale = 0.55;
   let rafId = null;
   let resizeTimer = null;
   let pointerX = 0.5;
@@ -80,7 +81,7 @@
         drops[i] = 0;
       }
 
-      drops[i] += speeds[i];
+      drops[i] += speeds[i] * speedScale;
     }
 
     ctx.shadowBlur = 0;
