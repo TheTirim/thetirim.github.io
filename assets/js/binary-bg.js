@@ -12,7 +12,7 @@
   let fontSize = 16;
   let drops = [];
   let speeds = [];
-  let speedScale = 0.55;
+  let speedScale = 0.30;
   let rafId = null;
   let resizeTimer = null;
   let pointerX = 0.5;
@@ -38,7 +38,7 @@
 
     const columns = Math.ceil(width / fontSize);
     drops = Array.from({ length: columns }, () => Math.floor(Math.random() * (height / fontSize)));
-    speeds = Array.from({ length: columns }, () => 0.65 + Math.random() * 0.9);
+    speeds = Array.from({ length: columns }, () => 0.30 + Math.random() * 0.55);
 
     renderFrame(true);
   }
@@ -96,7 +96,7 @@
       return;
     }
 
-    const frameInterval = document.hidden ? 320 : 16;
+    const frameInterval = document.hidden ? 320 : 24;
     if (!lastFrameTime || timestamp - lastFrameTime >= frameInterval) {
       lastFrameTime = timestamp;
       renderFrame();
