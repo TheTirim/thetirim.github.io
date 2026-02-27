@@ -57,12 +57,12 @@
   function renderFrame(clearOnly = false) {
     const driftX = Math.round((pointerX - 0.5) * 6);
     const driftY = (pointerY - 0.5) * 4;
-    const tailLength = 14;
-    const tailStep = 1;
-    const headMaxAlpha = 0.55;
-    const tailMinAlpha = 0.04;
+    const tailLength = 9;
+    const tailStep = 2;
+    const headMaxAlpha = 0.42;
+    const tailMinAlpha = 0.015;
 
-    ctx.fillStyle = 'rgba(11, 16, 32, 0.12)';
+    ctx.fillStyle = 'rgba(11, 16, 32, 0.22)';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.shadowBlur = 0;
@@ -86,9 +86,9 @@
         if (y < -fontSize) break;
 
         const k = t / Math.max(tailLength - 1, 1);
-        const a = Math.max(tailMinAlpha, headMaxAlpha * (1 - k) * (1 - k));
+        const a = Math.max(tailMinAlpha, headMaxAlpha * Math.pow(1 - k, 4));
 
-        const d = (t % 6 === 0 && Math.random() < 0.35)
+        const d = (t % 4 === 0 && Math.random() < 0.18)
           ? (colDigits[i] === '1' ? '0' : '1')
           : colDigits[i];
 
