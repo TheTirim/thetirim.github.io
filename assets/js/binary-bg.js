@@ -11,6 +11,7 @@
   let height = 0;
   let fontSize = 16;
   let drops = [];
+  let speeds = [];
   let rafId = null;
   let resizeTimer = null;
   let pointerX = 0.5;
@@ -36,6 +37,7 @@
 
     const columns = Math.ceil(width / fontSize);
     drops = Array.from({ length: columns }, () => Math.floor(Math.random() * (height / fontSize)));
+    speeds = Array.from({ length: columns }, () => 0.65 + Math.random() * 0.9);
 
     renderFrame(true);
   }
@@ -52,7 +54,7 @@
     const driftY = (pointerY - 0.5) * 4;
     const intensity = 0.82 + pointerY * 0.28;
 
-    ctx.fillStyle = 'rgba(11, 16, 32, 0.07)';
+    ctx.fillStyle = 'rgba(11, 16, 32, 0.075)';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -64,20 +66,21 @@
       const y = drops[i] * fontSize + driftY;
 
       const distance = Math.abs((x / Math.max(width, 1)) - pointerX);
-      const glow = Math.max(0, 1 - distance * 2.2) * 0.32;
-      const motionBoost = 0.75 + Math.abs(pointerX - 0.5) * 0.6;
-      const alpha = Math.min(0.62, (0.26 * intensity + glow) * motionBoost);
+      const glow = Math.max(0, 1 - distance * 2.0) * 0.28;
+      const motionBoost = 0.78 + Math.abs(pointerX - 0.5) * 0.45;
+      const alpha = Math.min(0.58, (0.24 * intensity + glow) * motionBoost);
 
+      const glowBlur = alpha > 0.38 ? 6 : 0;
       ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
       ctx.shadowColor = `rgba(${baseColor}, ${alpha})`;
-      ctx.shadowBlur = 6;
+      ctx.shadowBlur = glowBlur;
       ctx.fillText(digit, x, y);
 
       if (drops[i] * fontSize > height && Math.random() > 0.975) {
         drops[i] = 0;
       }
 
-      drops[i] += 1;
+      drops[i] += speeds[i];
     }
 
     ctx.shadowBlur = 0;
