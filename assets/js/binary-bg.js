@@ -12,6 +12,8 @@
   let fontSize = 16;
   let drops = [];
   let speeds = [];
+  let colDigits = [];
+  let colHold = [];
   let speedScale = 0.30;
   let rafId = null;
   let resizeTimer = null;
@@ -39,6 +41,9 @@
     const columns = Math.ceil(width / fontSize);
     drops = Array.from({ length: columns }, () => Math.floor(Math.random() * (height / fontSize)));
     speeds = Array.from({ length: columns }, () => 0.30 + Math.random() * 0.55);
+    // stable digits per column + hold frames
+    colDigits = Array.from({ length: drops.length }, () => (Math.random() > 0.5 ? '1' : '0'));
+    colHold = Array.from({ length: drops.length }, () => 6 + Math.floor(Math.random() * 18));
 
     renderFrame(true);
   }
@@ -62,7 +67,17 @@
     if (clearOnly) return;
 
     for (let i = 0; i < drops.length; i += 1) {
-      const digit = Math.random() > 0.5 ? '1' : '0';
+      // digit stays stable for some frames to avoid flicker
+      colHold[i] -= 1;
+      if (colHold[i] <= 0) {
+        // small chance to flip, otherwise keep
+        if (Math.random() < 0.55) {
+          colDigits[i] = (colDigits[i] === '1' ? '0' : '1');
+        }
+        // reset hold
+        colHold[i] = 6 + Math.floor(Math.random() * 18);
+      }
+      const digit = colDigits[i];
       const x = i * fontSize + driftX;
       const y = drops[i] * fontSize + driftY;
 
