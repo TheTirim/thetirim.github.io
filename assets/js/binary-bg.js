@@ -13,6 +13,7 @@
   let drops = [];
   let speeds = [];
   let colDigits = [];
+  let colHold = [];
   let speedScale = 0.30;
   let rafId = null;
   let resizeTimer = null;
@@ -41,6 +42,7 @@
     drops = Array.from({ length: columns }, () => Math.floor(Math.random() * (height / fontSize)));
     speeds = Array.from({ length: columns }, () => 0.30 + Math.random() * 0.55);
     colDigits = Array.from({ length: drops.length }, () => (Math.random() > 0.5 ? '1' : '0'));
+    colHold = Array.from({ length: drops.length }, () => 12 + Math.floor(Math.random() * 28));
 
     renderFrame(true);
   }
@@ -55,9 +57,12 @@
   function renderFrame(clearOnly = false) {
     const driftX = Math.round((pointerX - 0.5) * 6);
     const driftY = (pointerY - 0.5) * 4;
-    const intensity = 0.82 + pointerY * 0.28;
+    const tailLength = 14;
+    const tailStep = 1;
+    const headMaxAlpha = 0.55;
+    const tailMinAlpha = 0.04;
 
-    ctx.fillStyle = 'rgba(11, 16, 32, 0.075)';
+    ctx.fillStyle = 'rgba(11, 16, 32, 0.12)';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.shadowBlur = 0;
@@ -65,23 +70,34 @@
     if (clearOnly) return;
 
     for (let i = 0; i < drops.length; i += 1) {
-      const digit = colDigits[i];
       const x = i * fontSize + driftX;
-      const y = drops[i] * fontSize + driftY;
+      const headY = drops[i] * fontSize + driftY;
 
-      const distance = Math.abs((x / Math.max(width, 1)) - pointerX);
-      const glow = Math.max(0, 1 - distance * 2.0) * 0.28;
-      const motionBoost = 0.78 + Math.abs(pointerX - 0.5) * 0.45;
-      const alpha = Math.min(0.58, (0.24 * intensity + glow) * motionBoost);
+      colHold[i] -= 1;
+      if (colHold[i] <= 0) {
+        if (Math.random() < 0.30) {
+          colDigits[i] = (colDigits[i] === '1' ? '0' : '1');
+        }
+        colHold[i] = 12 + Math.floor(Math.random() * 28);
+      }
 
-      ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
-      ctx.shadowColor = `rgba(${baseColor}, ${alpha})`;
-      ctx.shadowBlur = 0;
-      ctx.fillText(digit, x, y);
+      for (let t = 0; t < tailLength; t += 1) {
+        const y = headY - (t * tailStep * fontSize);
+        if (y < -fontSize) break;
+
+        const k = t / Math.max(tailLength - 1, 1);
+        const a = Math.max(tailMinAlpha, headMaxAlpha * (1 - k) * (1 - k));
+
+        const d = (t % 6 === 0 && Math.random() < 0.35)
+          ? (colDigits[i] === '1' ? '0' : '1')
+          : colDigits[i];
+
+        ctx.fillStyle = `rgba(${baseColor}, ${a})`;
+        ctx.fillText(d, x, y);
+      }
 
       if (drops[i] * fontSize > height && Math.random() > 0.975) {
         drops[i] = 0;
-        // change digit only when this column resets (new drop starts)
         colDigits[i] = (Math.random() > 0.5 ? '1' : '0');
       }
 
