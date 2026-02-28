@@ -267,6 +267,19 @@ pre,
   opacity: 0.95;
 }
 
+.status-matrix__text::after{
+  content:'▌';
+  margin-left:6px;
+  color: var(--accent, #6ef3c5);
+  opacity: 0.85;
+  animation: matrixCursorBlink 1.05s steps(1,end) infinite;
+}
+
+@keyframes matrixCursorBlink{
+  0%,49%{ opacity:0.85; }
+  50%,100%{ opacity:0; }
+}
+
 .sr-only{
   position:absolute !important;
   width:1px; height:1px;
