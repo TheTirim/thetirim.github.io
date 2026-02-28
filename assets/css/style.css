@@ -917,3 +917,67 @@ small, .meta, .label, .muted, .subtext, .secondary{ color: var(--text-dim); }
 .status-matrix__percent{ color: var(--accent); }
 .status-matrix__text{ color: var(--accent-dim); }
 .status-matrix__text::after{ color: var(--accent); }
+
+:root{
+  --text-main:   #cfe3da;   /* Headlines – phosphorartig */
+  --text-body:   #9fb6b0;   /* Fließtext */
+  --text-dim:    #6f8784;   /* Meta / Secondary */
+  --accent-main: #6ef3c5;   /* Matrix-Neon */
+  --accent-dim:  #2fa58a;   /* Status / Logs */
+}
+
+body{
+  color: var(--text-body);
+}
+
+h1, h2, h3{
+  color: var(--text-main);
+}
+
+p, li{
+  color: var(--text-body);
+}
+
+small, .meta, .label, .muted, .subtext, .secondary{
+  color: var(--text-dim);
+}
+
+a, .link{
+  color: var(--accent-main);
+}
+
+a:hover{
+  color: var(--accent-dim);
+}
+
+.card,
+.project-card,
+.skill-card{
+  color: var(--text-main);
+}
+
+.card p,
+.project-card p,
+.skill-card p,
+.card li,
+.project-card li,
+.skill-card li{
+  color: var(--text-body);
+}
+
+.card small,
+.project-card small,
+.skill-card small,
+.card .meta{
+  color: var(--text-dim);
+}
+
+.system-status,
+.status-matrix__percent{
+  color: var(--accent-main);
+}
+
+.status-matrix__text,
+.status-matrix__label{
+  color: var(--accent-dim);
+}
