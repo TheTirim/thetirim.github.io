@@ -3,12 +3,23 @@
   --pad: 20px;
   --radius: 14px;
 
+  --bg-main: #0b1020;
+  --bg-card: rgba(255,255,255,0.04);
+  --text-main: #e6edf3;
+  --text-muted: #9aa4b2;
+  --accent: #6ef3c5;
+  --accent-dim: #2fa58a;
+
+  --font-head: 'Space Grotesk', system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'JetBrains Mono', monospace;
+
   /* Dark + Glass Theme */
-  --bg1: #0b1020;
+  --bg1: var(--bg-main);
   --bg2: #0f1a33;
 
-  --text: #e9ecf5;
-  --muted: rgba(233,236,245,.75);
+  --text: var(--text-main);
+  --muted: var(--text-muted);
 
   --border: rgba(255,255,255,.12);
   --glass: rgba(255,255,255,.08);
@@ -28,8 +39,8 @@ html {
 body {
   position: relative;
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: var(--font-body);
+  line-height: 1.6;
   color: var(--text);
 
   background: transparent;
@@ -88,13 +99,30 @@ footer,
   padding: 2.5rem 0;
 }
 
-.muted { opacity: 1; color: var(--muted); }
-.lead { font-size: 1.1rem; color: rgba(233,236,245,.85); }
-.kicker { letter-spacing: .03em; text-transform: uppercase; font-size: .85rem; color: rgba(233,236,245,.7); }
+.muted,
+.subtext,
+.secondary,
+small { opacity: 1; color: var(--text-muted); }
+.lead { font-size: 1.1rem; color: var(--text-main); }
+.kicker { letter-spacing: .03em; text-transform: uppercase; font-size: .85rem; color: var(--text-muted); }
 
 /* ===== Typography polish ===== */
-h1, h2, h3 { letter-spacing: -0.02em; }
+h1, h2, h3 {
+  font-family: var(--font-head);
+  letter-spacing: -0.02em;
+}
 p { max-width: 65ch; }
+
+code,
+pre,
+.mono,
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.accent { color: var(--accent); }
+.accent-dim { color: var(--accent-dim); }
 
 /* HEADER */
 .site-header {
@@ -239,14 +267,14 @@ p { max-width: 65ch; }
 
 .about-subline {
   margin: 6px 0 0;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 1rem;
 }
 
 .about-text {
   margin: 18px 0 0;
   max-width: 68ch;
-  color: rgba(233,236,245,.93);
+  color: var(--text-main);
 }
 
 .about-highlights {
@@ -280,7 +308,7 @@ p { max-width: 65ch; }
 .about-highlight-item p {
   margin: 4px 0 0;
   font-size: .9rem;
-  color: rgba(233,236,245,.78);
+  color: var(--text-muted);
 }
 
 .about-skill-chips {
@@ -310,7 +338,7 @@ p { max-width: 65ch; }
   margin-top: 14px;
 }
 
-a { color: rgba(233,236,245,.92); }
+a { color: var(--text-main); }
 a:hover { color: #fff; }
 
 /* BUTTONS */
