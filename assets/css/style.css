@@ -981,3 +981,67 @@ a:hover{
 .status-matrix__label{
   color: var(--accent-dim);
 }
+
+:root{
+  --text-main:   #e6fff6;   /* headline main (brighter, still soft) */
+  --text-body:   #b7d2ca;   /* body text (less grey, more readable) */
+  --text-dim:    #7f9692;   /* meta (still dim but readable) */
+
+  --accent-main: #6ef3c5;   /* matrix accent */
+  --accent-hot:  #8fffe0;   /* hover / peak highlight */
+}
+
+body{
+  color: var(--text-body);
+}
+
+h1, h2, h3{
+  color: var(--text-main);
+  text-shadow: 0 0 6px rgba(110, 243, 197, 0.25);
+}
+
+p, li{
+  color: var(--text-body);
+}
+
+small, .meta, .label, .muted, .subtext, .secondary{
+  color: var(--text-dim);
+}
+
+a, .link{
+  color: var(--accent-main);
+}
+
+a:hover{
+  color: var(--accent-hot);
+}
+
+.status-matrix__percent{
+  color: var(--accent-main);
+}
+
+.status-matrix__label{
+  color: var(--text-dim);
+}
+
+.status-matrix__text{
+  color: rgba(110, 243, 197, 0.55); /* controlled terminal feel */
+}
+
+.status-matrix__text::after{
+  color: var(--accent-main);
+}
+
+.card, .project-card, .skill-card{
+  color: var(--text-main);
+}
+
+.card p, .project-card p, .skill-card p,
+.card li, .project-card li, .skill-card li{
+  color: var(--text-body);
+}
+
+.card small, .project-card small, .skill-card small,
+.card .meta{
+  color: var(--text-dim);
+}
