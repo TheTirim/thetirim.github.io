@@ -24,6 +24,8 @@
   let bootDone = false;
   let boost = 0;     // hover intensity
   let pointer = 0.5; // 0..1 mouse x within host
+  let blip = 0;      // 0..1 short pulse
+  let tickPulse = 0; // 0..1 short pulse
   let raf = null;
   let t0 = 0;
 
@@ -117,6 +119,14 @@
 
     progress = Math.max(0, Math.min(HOLD_MAX, progress));
 
+    // micro impulses (rare)
+    if (rand01(time * 0.006) < (0.020 + boost * 0.030)) blip = 1;
+    if (rand01(time * 0.004) < (0.030 + boost * 0.040)) tickPulse = 1;
+
+    // decay
+    blip *= 0.72;
+    tickPulse *= 0.78;
+
     const barPad = 8;
     const barW = w - barPad * 2;
     const barH = h - 16;
@@ -158,6 +168,12 @@
     const headX = barX + fillW + headJitter;
     ctx.fillStyle = `rgba(${baseRGB}, ${0.16 + boost * 0.18})`;
     ctx.fillRect(barX, barY, fillW, barH);
+    // head blip: a tiny overbright flash (subtle)
+    const blipA = blip * (0.18 + boost * 0.18);
+    if (blipA > 0.01) {
+      ctx.fillStyle = `rgba(${baseRGB}, ${blipA})`;
+      ctx.fillRect(headX - 6, barY, 6, barH);
+    }
     ctx.fillStyle = `rgba(${baseRGB}, ${0.55 + boost * 0.15})`;
     ctx.fillRect(headX - 2, barY, 2, barH);
 
@@ -177,6 +193,16 @@
     drawScanlines(time);
     drawNoise(time);
 
+    // phosphor afterglow (very subtle) - only inside bar area
+    const glowA = 0.06 + boost * 0.06;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = `rgba(${baseRGB}, ${glowA})`;
+    // thin horizontal glow band drifting slowly
+    const gy = barY + Math.floor((rand01(time * 0.0017) * 0.6 + 0.2) * barH);
+    ctx.fillRect(barX, gy, barW, 2);
+    ctx.restore();
+
     // CRT vignette (subtle)
     const grad = ctx.createRadialGradient(w * 0.5, h * 0.5, Math.min(w, h) * 0.1, w * 0.5, h * 0.5, Math.max(w, h) * 0.7);
     grad.addColorStop(0, 'rgba(0,0,0,0)');
@@ -185,7 +211,8 @@
     ctx.fillRect(0, 0, w, h);
 
     // HUD ticks (top + bottom)
-    ctx.fillStyle = `rgba(255,255,255,${0.12 + boost * 0.10})`;
+    const tickA = (0.12 + boost * 0.10) + tickPulse * (0.18 + boost * 0.12);
+    ctx.fillStyle = `rgba(255,255,255,${tickA})`;
     for (let x = 0; x <= barW; x += 24) {
       ctx.fillRect(barX + x, barY, 1, 3);
       ctx.fillRect(barX + x, barY + barH - 3, 1, 3);
