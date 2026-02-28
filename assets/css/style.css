@@ -7,6 +7,7 @@
   --bg-card: rgba(255,255,255,0.04);
   --text-main: #e6edf3;
   --text-muted: #9aa4b2;
+  --text-dim: #6b7380;
   --accent: #6ef3c5;
   --accent-dim: #2fa58a;
 
@@ -102,7 +103,7 @@ footer,
 .muted,
 .subtext,
 .secondary,
-small { opacity: 1; color: var(--text-muted); }
+small { opacity: 1; color: var(--text-dim); }
 .lead { font-size: 1.1rem; color: var(--text-main); }
 .kicker { letter-spacing: .03em; text-transform: uppercase; font-size: .85rem; color: var(--text-muted); }
 
@@ -408,7 +409,7 @@ pre,
 }
 
 a { color: var(--text-main); }
-a:hover { color: #fff; }
+a:hover { color: var(--accent); }
 
 /* BUTTONS */
 .btn {
@@ -736,7 +737,7 @@ main, header, nav, footer, #app, .app, .content {
 }
 
 .hero-headline .hero-word.is-keyword-focus {
-  color: #fff;
+  color: var(--text-main);
   opacity: 1;
 }
 
@@ -844,14 +845,6 @@ code, pre, .mono, .tag{
 .accent{ color:var(--accent); }
 .accent-dim{ color:var(--accent-dim); }
 
-:root{
-  --text-main: #e6edf3;
-  --text-muted: #9aa4b2;
-  --text-dim: #6b7380;
-  --accent: #6ef3c5;
-  --accent-dim: #2fa58a;
-}
-
 h1{
   color: var(--text-main);
 }
@@ -916,46 +909,11 @@ h4{
   --accent-dim:#2fa58a;
 }
 
-/* main text */
-html body{
-  color: var(--text-main);
-}
+body{ color: var(--text-main); }
+p, li{ color: var(--text-muted); }
+small, .meta, .label, .muted, .subtext, .secondary{ color: var(--text-dim); }
 
-/* paragraphs + list text */
-html body p,
-html body li{
-  color: var(--text-muted);
-}
-
-/* small/meta labels */
-html body small,
-html body .meta,
-html body .label,
-html body .muted,
-html body .subtext,
-html body .secondary{
-  color: var(--text-dim);
-}
-
-/* cards inherit correctly */
-html body .card,
-html body .project-card,
-html body .skill-card{
-  color: var(--text-main);
-}
-
-html body .status-matrix__label{
-  color: var(--text-dim);
-}
-
-html body .status-matrix__percent{
-  color: var(--accent);
-}
-
-html body .status-matrix__text{
-  color: var(--accent-dim);
-}
-
-html body .status-matrix__text::after{
-  color: var(--accent);
-}
+.status-matrix__label{ color: var(--text-dim); }
+.status-matrix__percent{ color: var(--accent); }
+.status-matrix__text{ color: var(--accent-dim); }
+.status-matrix__text::after{ color: var(--accent); }
