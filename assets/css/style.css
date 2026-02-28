@@ -843,3 +843,43 @@ code, pre, .mono, .tag{
 
 .accent{ color:var(--accent); }
 .accent-dim{ color:var(--accent-dim); }
+
+:root{
+  --text-main: #e6edf3;
+  --text-muted: #9aa4b2;
+  --text-dim: #6b7380;
+  --accent: #6ef3c5;
+  --accent-dim: #2fa58a;
+}
+
+h1{
+  color: var(--text-main);
+}
+
+p,
+.hero .lead{
+  color: var(--text-muted);
+}
+
+.label,
+.meta,
+.small,
+.status-label,
+.kicker,
+.status-matrix__label,
+.facts strong,
+h4{
+  color: var(--text-dim);
+}
+
+.status-matrix__text{
+  color: var(--accent-dim);
+}
+
+.status-matrix__percent{
+  color: var(--accent);
+}
+
+.status-matrix__text::after{
+  color: var(--accent);
+}
