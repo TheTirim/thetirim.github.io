@@ -907,3 +907,55 @@ h4{
     transition: none !important;
   }
 }
+
+:root{
+  --text-main:#e6edf3;
+  --text-muted:#9aa4b2;
+  --text-dim:#6b7380;
+  --accent:#6ef3c5;
+  --accent-dim:#2fa58a;
+}
+
+/* main text */
+html body{
+  color: var(--text-main);
+}
+
+/* paragraphs + list text */
+html body p,
+html body li{
+  color: var(--text-muted);
+}
+
+/* small/meta labels */
+html body small,
+html body .meta,
+html body .label,
+html body .muted,
+html body .subtext,
+html body .secondary{
+  color: var(--text-dim);
+}
+
+/* cards inherit correctly */
+html body .card,
+html body .project-card,
+html body .skill-card{
+  color: var(--text-main);
+}
+
+html body .status-matrix__label{
+  color: var(--text-dim);
+}
+
+html body .status-matrix__percent{
+  color: var(--accent);
+}
+
+html body .status-matrix__text{
+  color: var(--accent-dim);
+}
+
+html body .status-matrix__text::after{
+  color: var(--accent);
+}
