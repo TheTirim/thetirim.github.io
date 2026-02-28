@@ -247,6 +247,10 @@ pre,
   color: var(--accent-dim, #2fa58a);
 }
 
+.status-matrix__label, .status-matrix__percent{
+  font-variant-numeric: tabular-nums;
+}
+
 #status-matrix-canvas{
   width: 100%;
   height: 56px;

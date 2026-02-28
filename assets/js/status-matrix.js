@@ -17,7 +17,10 @@
 
   // progress model: fake boot loop (tool-like)
   let progress = 0;
-  let target = 0.86; // stays "in progress" (portfolio in build)
+  const BOOT_CAP = 0.58;     // stop at 58%
+  const HOLD_MIN = 0.54;     // oscillation min
+  const HOLD_MAX = 0.60;     // oscillation max
+  let bootDone = false;
   let boost = 0;     // hover intensity
   let pointer = 0.5; // 0..1 mouse x within host
   let raf = null;
@@ -26,12 +29,20 @@
   const baseRGB = '110, 243, 197'; // matches --accent
   const bgRGB = '11, 16, 32';
 
-  const lines = [
+  const bootLines = [
     'booting…',
     'loading_modules…',
     'linking_projects…',
-    'syncing_assets…',
-    'ready_for_input…'
+    'mounting_io…',
+    'allocating_buffers…'
+  ];
+
+  const holdLines = [
+    'waiting_for_input…',
+    'awaiting_timeout…',
+    'handshake_pending…',
+    'link_idle…',
+    'retrying_channel…'
   ];
   let lineIdx = 0;
 
@@ -44,7 +55,7 @@
     canvas.height = Math.floor(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.textBaseline = 'middle';
-    ctx.font = `12px ui-monospace, Menlo, Consolas, monospace`;
+    ctx.font = `13px ui-monospace, Menlo, Consolas, monospace`;
   }
 
   function rand01(seed) {
@@ -54,8 +65,8 @@
   }
 
   function drawScanlines(time) {
-    const step = 3;
-    const a = 0.05 + boost * 0.06;
+    const step = 2;
+    const a = 0.09 + boost * 0.08;
     ctx.fillStyle = `rgba(255,255,255,${a})`;
     for (let y = 0; y < h; y += step) {
       if (((y + (time * 0.02)) | 0) % (step * 2) === 0) {
@@ -84,14 +95,26 @@
     ctx.strokeStyle = `rgba(255,255,255,0.08)`;
     ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
 
-    // progress easing (slow, tool-like)
-    const speed = 0.004 + boost * 0.007;
-    progress += (target - progress) * speed;
-    if (progress > target - 0.005) {
-      // small jitter so it feels alive
-      progress = target - (0.006 + rand01(time * 0.002) * 0.01);
+    // progress model: boot to BOOT_CAP, then hold/oscillate (never "complete")
+    const bootSpeed = 0.010 + boost * 0.010;   // faster early boot
+    const holdSpeed = 0.003 + boost * 0.003;   // gentle drift in hold state
+
+    if (!bootDone) {
+      progress += (BOOT_CAP - progress) * bootSpeed;
+      if (progress >= BOOT_CAP - 0.006) {
+        bootDone = true;
+        progress = BOOT_CAP - 0.010;
+      }
+    } else {
+      // oscillate between HOLD_MIN..HOLD_MAX with subtle noise
+      const wave = Math.sin(time * 0.0012) * 0.012;      // slow wave
+      const noise = (rand01(time * 0.0023) - 0.5) * 0.010; // small jitter
+      const desired = BOOT_CAP + wave + noise;
+      const clamped = Math.max(HOLD_MIN, Math.min(HOLD_MAX, desired));
+      progress += (clamped - progress) * holdSpeed;
     }
-    progress = Math.max(0, Math.min(0.99, progress));
+
+    progress = Math.max(0, Math.min(HOLD_MAX, progress));
 
     const barPad = 8;
     const barW = w - barPad * 2;
@@ -119,8 +142,9 @@
     }
 
     // glow head line (subtle)
-    const headX = barX + fillW;
-    ctx.fillStyle = `rgba(${baseRGB}, ${0.20 + boost * 0.20})`;
+    const headJitter = bootDone ? (rand01(time * 0.01) > 0.5 ? 1 : 0) : 0;
+    const headX = barX + fillW + headJitter;
+    ctx.fillStyle = `rgba(${baseRGB}, ${0.16 + boost * 0.18})`;
     ctx.fillRect(barX, barY, fillW, barH);
     ctx.fillStyle = `rgba(${baseRGB}, ${0.55 + boost * 0.15})`;
     ctx.fillRect(headX - 2, barY, 2, barH);
@@ -133,6 +157,13 @@
     // overlays
     drawScanlines(time);
     drawNoise(time);
+
+    // CRT vignette (subtle)
+    const grad = ctx.createRadialGradient(w * 0.5, h * 0.5, Math.min(w, h) * 0.1, w * 0.5, h * 0.5, Math.max(w, h) * 0.7);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.28)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
 
     // HUD ticks
     ctx.fillStyle = `rgba(255,255,255,${0.10 + boost * 0.08})`;
@@ -168,11 +199,16 @@
     raf = null;
   }
 
-  // rotate status lines (tool-like)
+  // rotate status lines (boot -> hold)
   window.setInterval(() => {
-    lineIdx = (lineIdx + 1) % lines.length;
-    textEl.textContent = lines[lineIdx];
-  }, 1400);
+    if (!bootDone) {
+      lineIdx = (lineIdx + 1) % bootLines.length;
+      textEl.textContent = bootLines[lineIdx];
+      return;
+    }
+    lineIdx = (lineIdx + 1) % holdLines.length;
+    textEl.textContent = holdLines[lineIdx];
+  }, 1200);
 
   // interaction
   host.addEventListener('mouseenter', () => { boost = 1; }, { passive: true });
