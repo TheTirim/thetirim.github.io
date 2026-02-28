@@ -982,66 +982,146 @@ a:hover{
   color: var(--accent-dim);
 }
 
+/* === THEME: TECH BLUE/CYAN (single source of truth) === */
 :root{
-  --text-main:   #e6fff6;   /* headline main (brighter, still soft) */
-  --text-body:   #b7d2ca;   /* body text (less grey, more readable) */
-  --text-dim:    #7f9692;   /* meta (still dim but readable) */
+  --t-main:   #dfe9f6;  /* headlines, key text (cool ice) */
+  --t-body:   #a9bed6;  /* readable steel blue */
+  --t-dim:    #6f849a;  /* meta/secondary */
+  --t-line:   rgba(255,255,255,0.10);
 
-  --accent-main: #6ef3c5;   /* matrix accent */
-  --accent-hot:  #8fffe0;   /* hover / peak highlight */
+  --t-accent: #42d9ff;  /* cyan tech */
+  --t-accent2:#8bf1ff;  /* hover/peak */
 }
 
 body{
-  color: var(--text-body);
+  color: var(--t-body);
 }
 
-h1, h2, h3{
-  color: var(--text-main);
-  text-shadow: 0 0 6px rgba(110, 243, 197, 0.25);
+h1,h2,h3{
+  color: var(--t-main);
+  text-shadow: 0 0 12px rgba(66,217,255,0.10);
 }
 
 p, li{
-  color: var(--text-body);
+  color: var(--t-body);
 }
 
 small, .meta, .label, .muted, .subtext, .secondary{
-  color: var(--text-dim);
+  color: var(--t-dim);
 }
 
 a, .link{
-  color: var(--accent-main);
+  color: var(--t-accent);
 }
 
 a:hover{
-  color: var(--accent-hot);
+  color: var(--t-accent2);
+  text-shadow: 0 0 10px rgba(66,217,255,0.18);
 }
 
-.status-matrix__percent{
-  color: var(--accent-main);
-}
-
-.status-matrix__label{
-  color: var(--text-dim);
-}
-
-.status-matrix__text{
-  color: rgba(110, 243, 197, 0.55); /* controlled terminal feel */
-}
-
-.status-matrix__text::after{
-  color: var(--accent-main);
-}
-
+/* cards keep hierarchy */
 .card, .project-card, .skill-card{
-  color: var(--text-main);
+  color: var(--t-main);
+  border-color: var(--t-line);
 }
 
 .card p, .project-card p, .skill-card p,
 .card li, .project-card li, .skill-card li{
-  color: var(--text-body);
+  color: var(--t-body);
 }
 
 .card small, .project-card small, .skill-card small,
 .card .meta{
-  color: var(--text-dim);
+  color: var(--t-dim);
 }
+
+/* status stays “tech” but not green */
+.status-matrix__percent{ color: var(--t-accent); }
+.status-matrix__label{ color: var(--t-dim); }
+.status-matrix__text{ color: rgba(66,217,255,0.55); }
+.status-matrix__text::after{ color: var(--t-accent); }
+/* === END THEME === */
+
+/* === TYPOGRAPHY POLISH : TECH / ENGINEERING === */
+
+/* Hero headline: mehr Autorität */
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Section headlines */
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Card / Project titles */
+.card h3,
+.project-card h3 {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Body text: bessere Lesbarkeit, weniger Mattheit */
+p {
+  line-height: 1.6;
+}
+
+/* Meta / kleine Texte bewusst ruhiger */
+.small,
+.meta,
+.card p {
+  line-height: 1.55;
+}
+
+/* === TECH NEUTRAL TYPOGRAPHY COLORS === */
+
+:root {
+  --text-hero: #f2f6f8;        /* fast weiß, klar */
+  --text-main: #c9d2d8;        /* kaltes Hellgrau */
+  --text-muted: #8fa1ab;      /* tech blue-grey */
+}
+
+/* Hero */
+h1 {
+  color: var(--text-hero);
+}
+
+/* Sections & Cards */
+h2, h3 {
+  color: var(--text-hero);
+}
+
+/* Body */
+p {
+  color: var(--text-main);
+}
+
+/* Meta / Secondary */
+.small,
+.meta,
+.card p {
+  color: var(--text-muted);
+}
+
+/* === FINAL TEXT COLOR FIX (targeted) === */
+:root{
+  --text-hero: #f2f6f8;
+  --text-main: #c9d2d8;
+  --text-muted:#8fa1ab;
+  --accent:    #42d9ff;
+}
+
+.hero h1, main h1, header + main h1 { color: var(--text-hero); }
+.hero p,  main p.hero-subline, .hero .subline { color: var(--text-main); }
+
+.project-card h3, .card h3 { color: var(--text-hero); }
+.project-card p,  .card p  { color: var(--text-main); }
+
+.nav a, nav a{ color: var(--text-muted); }
+.nav a:hover, nav a:hover{ color: var(--accent); }
+
+/* meta */
+.meta, small, .muted, .subtext{ color: var(--text-muted); }
+/* === END === */
