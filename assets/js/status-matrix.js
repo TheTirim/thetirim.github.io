@@ -3,6 +3,7 @@
   const canvas = document.getElementById('status-matrix-canvas');
   const percentEl = document.getElementById('status-matrix-percent');
   const textEl = document.getElementById('status-matrix-text');
+  const setLine = (s) => { textEl.textContent = s; };
 
   if (!host || !canvas || !percentEl || !textEl) return;
 
@@ -141,6 +142,17 @@
       }
     }
 
+    // rare glitch blocks (1-2 frames) for retro tool feel
+    const glitchChance = 0.035 + boost * 0.04;
+    if (fillW > 40 && rand01(time * 0.004) < glitchChance) {
+      const gx = barX + Math.floor(rand01(time * 0.009) * Math.max(1, fillW - 18));
+      const gy = barY + Math.floor(rand01(time * 0.013) * Math.max(1, barH - 10));
+      const gw = 10 + Math.floor(rand01(time * 0.017) * 22);
+      const gh = 6 + Math.floor(rand01(time * 0.019) * 12);
+      ctx.fillStyle = `rgba(${baseRGB}, ${0.10 + boost * 0.14})`;
+      ctx.fillRect(gx, gy, gw, gh);
+    }
+
     // glow head line (subtle)
     const headJitter = bootDone ? (rand01(time * 0.01) > 0.5 ? 1 : 0) : 0;
     const headX = barX + fillW + headJitter;
@@ -149,10 +161,17 @@
     ctx.fillStyle = `rgba(${baseRGB}, ${0.55 + boost * 0.15})`;
     ctx.fillRect(headX - 2, barY, 2, barH);
 
-    // moving scan highlight (depends on pointer)
-    const scanX = barX + Math.floor(barW * pointer);
-    ctx.fillStyle = `rgba(${baseRGB}, ${0.06 + boost * 0.10})`;
-    ctx.fillRect(scanX - 10, barY, 20, barH);
+    // scan sweep (slow) + pointer influence
+    const sweep = (time * (0.00012 + boost * 0.00008)) % 1; // 0..1
+    const scanX = barX + Math.floor(barW * (0.25 * pointer + 0.75 * sweep));
+    const scanW = 42;
+    const scanA = 0.08 + boost * 0.14;
+    ctx.fillStyle = `rgba(${baseRGB}, ${scanA})`;
+    ctx.fillRect(scanX - scanW / 2, barY, scanW, barH);
+
+    // bright core line inside sweep
+    ctx.fillStyle = `rgba(${baseRGB}, ${0.22 + boost * 0.22})`;
+    ctx.fillRect(scanX - 1, barY, 2, barH);
 
     // overlays
     drawScanlines(time);
@@ -165,10 +184,11 @@
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
-    // HUD ticks
-    ctx.fillStyle = `rgba(255,255,255,${0.10 + boost * 0.08})`;
-    for (let x = 0; x <= barW; x += 28) {
-      ctx.fillRect(barX + x, barY + barH - 2, 1, 2);
+    // HUD ticks (top + bottom)
+    ctx.fillStyle = `rgba(255,255,255,${0.12 + boost * 0.10})`;
+    for (let x = 0; x <= barW; x += 24) {
+      ctx.fillRect(barX + x, barY, 1, 3);
+      ctx.fillRect(barX + x, barY + barH - 3, 1, 3);
     }
 
     // text update
@@ -203,11 +223,11 @@
   window.setInterval(() => {
     if (!bootDone) {
       lineIdx = (lineIdx + 1) % bootLines.length;
-      textEl.textContent = bootLines[lineIdx];
+      setLine(bootLines[lineIdx]);
       return;
     }
     lineIdx = (lineIdx + 1) % holdLines.length;
-    textEl.textContent = holdLines[lineIdx];
+    setLine(holdLines[lineIdx]);
   }, 1200);
 
   // interaction
