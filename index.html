@@ -75,51 +75,73 @@
       <div class="container">
         <header class="section-head">
           <h2>Projekte</h2>
-          
+          <div class="projects-toolbar" aria-label="Projektansicht">
+            <button class="btn projects-nav" type="button" data-projects-prev aria-label="Vorherige Projekte">‹</button>
+            <button class="btn projects-nav" type="button" data-projects-next aria-label="Naechste Projekte">›</button>
+            <button class="btn projects-toggle" type="button" data-projects-toggle aria-pressed="false">Alle Projekte</button>
+          </div>
         </header>
 
-        <div class="grid cards">
-          <article class="card reveal">
-            <h3>TabZero – Minimalistischer Tab-Blocker</h3>
-            <p class="muted">
-              TabZero ist ein minimalistisches Firefox-Tool zur Tab-Kontrolle: neue Tabs werden standardmäßig blockiert,
-              nur explizit erlaubte Seiten sind freigegeben. Der Schwerpunkt liegt auf klarer Regel-Logik und reproduzierbarem Verhalten.
-            </p>
-            <ul class="tags">
-              <li>JavaScript</li><li>WebExtension</li><li>Privacy</li>
-            </ul>
-            <div class="card-actions">
-              <a href="https://addons.mozilla.org/de/firefox/addon/tabzero/" target="_blank" rel="noreferrer">Addon</a>
-            </div>
-          </article>
-          <article class="card reveal">
-            <h3>IceChaos – 2D Arcade Game</h3>
-            <p class="muted">
-              IceChaos ist ein 2D-Arcade-Projekt aus der prototypischen Entwicklung.
-              Der Fokus liegt auf Spiel-Logik, Kollisionsabfragen, Zustandsverwaltung und sauberer
-              Projektstruktur.
-            </p>
-            <ul class="tags">
-              <li>JavaScript</li><li>HTML</li><li>Canvas</li><li>Game Logic</li>
-            </ul>
-            <div class="card-actions">
-              <a href="https://github.com/TheTirim/Game-IceChaos" target="_blank" rel="noreferrer">Repo</a>
-              <a href="https://thetirim.github.io/Game-IceChaos/" target="_blank" rel="noreferrer">Spiel starten</a>
-            </div>
-          </article>
-          <article class="card reveal">
-            <h3>Screen Assistant</h3>
-            <p class="muted">
-              Windows-only Desktop Assistant mit WPF-Tray-App und lokalem FastAPI-Service.
-              Laeuft lokal ohne Cloud-Calls.
-            </p>
-            <ul class="tags">
-              <li>Windows 10/11</li><li>.NET 8</li><li>Python 3.11+</li><li>WPF</li><li>FastAPI</li>
-            </ul>
-            <div class="card-actions">
-              <a href="https://github.com/TheTirim/ScreenAssistant" target="_blank" rel="noreferrer">Repo</a>
-            </div>
-          </article>
+        <div class="projects-slider" data-projects-slider>
+          <div class="grid cards projects-track" data-projects-track>
+            <article class="card reveal">
+              <div class="card-media">
+                <video controls muted playsinline preload="metadata">
+                  <source src="img/Server-Sentinel-Demo.mp4" type="video/mp4" />
+                  Dein Browser unterstuetzt das eingebettete Video nicht.
+                </video>
+              </div>
+              <h3>Server Sentinel</h3>
+              <p class="muted">
+                Lokaler FastAPI Access-Security-Monitor fuer Linux-Server zur Auswertung von SSH- und XRDP-Sicherheitsereignissen.
+                Das Projekt kombiniert Dashboard, Event-Import, Suspicious-Detection, Fail2Ban-Status und persistente SQLite-Speicherung.
+              </p>
+              <ul class="tags">
+                <li>FastAPI</li><li>Python 3.11+</li><li>SQLite</li><li>SSH/XRDP</li><li>Fail2Ban</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3>TabZero – Minimalistischer Tab-Blocker</h3>
+              <p class="muted">
+                TabZero ist ein minimalistisches Firefox-Tool zur Tab-Kontrolle: neue Tabs werden standardmäßig blockiert,
+                nur explizit erlaubte Seiten sind freigegeben. Der Schwerpunkt liegt auf klarer Regel-Logik und reproduzierbarem Verhalten.
+              </p>
+              <ul class="tags">
+                <li>JavaScript</li><li>WebExtension</li><li>Privacy</li>
+              </ul>
+              <div class="card-actions">
+                <a href="https://addons.mozilla.org/de/firefox/addon/tabzero/" target="_blank" rel="noreferrer">Addon</a>
+              </div>
+            </article>
+            <article class="card reveal">
+              <h3>IceChaos – 2D Arcade Game</h3>
+              <p class="muted">
+                IceChaos ist ein 2D-Arcade-Projekt aus der prototypischen Entwicklung.
+                Der Fokus liegt auf Spiel-Logik, Kollisionsabfragen, Zustandsverwaltung und sauberer
+                Projektstruktur.
+              </p>
+              <ul class="tags">
+                <li>JavaScript</li><li>HTML</li><li>Canvas</li><li>Game Logic</li>
+              </ul>
+              <div class="card-actions">
+                <a href="https://github.com/TheTirim/Game-IceChaos" target="_blank" rel="noreferrer">Repo</a>
+                <a href="https://thetirim.github.io/Game-IceChaos/" target="_blank" rel="noreferrer">Spiel starten</a>
+              </div>
+            </article>
+            <article class="card reveal">
+              <h3>Screen Assistant</h3>
+              <p class="muted">
+                Windows-only Desktop Assistant mit WPF-Tray-App und lokalem FastAPI-Service.
+                Laeuft lokal ohne Cloud-Calls.
+              </p>
+              <ul class="tags">
+                <li>Windows 10/11</li><li>.NET 8</li><li>Python 3.11+</li><li>WPF</li><li>FastAPI</li>
+              </ul>
+              <div class="card-actions">
+                <a href="https://github.com/TheTirim/ScreenAssistant" target="_blank" rel="noreferrer">Repo</a>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
